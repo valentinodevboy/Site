@@ -59,6 +59,52 @@
       mask-image: radial-gradient(circle, black, transparent 78%);
     }
 
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      color: rgba(255, 184, 160, 0.35);
+      font-size: 18px;
+      animation: rise 10s linear infinite;
+    }
+
+    .heart:nth-child(1) {
+      left: 8%;
+      animation-delay: 0s;
+      font-size: 16px;
+    }
+
+    .heart:nth-child(2) {
+      left: 24%;
+      animation-delay: 2s;
+      font-size: 22px;
+    }
+
+    .heart:nth-child(3) {
+      left: 46%;
+      animation-delay: 4s;
+      font-size: 14px;
+    }
+
+    .heart:nth-child(4) {
+      left: 68%;
+      animation-delay: 1s;
+      font-size: 20px;
+    }
+
+    .heart:nth-child(5) {
+      left: 84%;
+      animation-delay: 5s;
+      font-size: 17px;
+    }
+
     .orb {
       position: absolute;
       width: 220px;
@@ -132,7 +178,6 @@
       border-radius: 25px;
     }
 
-
     .music-button {
       display: inline-flex;
       align-items: center;
@@ -148,6 +193,14 @@
       backdrop-filter: blur(14px);
       box-shadow: 0 14px 36px rgba(0,0,0,.25);
       cursor: pointer;
+    }
+
+    .music-hint {
+      margin: 12px auto 0;
+      max-width: 320px;
+      color: #b9958d;
+      font-size: .82rem;
+      line-height: 1.5;
     }
 
     .button {
@@ -191,6 +244,125 @@
     .star {
       color: #ffb8a0;
       font-size: 2.2rem;
+    }
+
+    .confession {
+      padding: 92px 24px 72px;
+      text-align: center;
+    }
+
+    .confession h2 {
+      max-width: 780px;
+      margin: 10px auto 0;
+      font-size: clamp(2.1rem, 9vw, 4.4rem);
+      line-height: .95;
+      letter-spacing: -.07em;
+    }
+
+    .confession p {
+      max-width: 590px;
+      margin: 22px auto 0;
+      color: #dfc5bd;
+      line-height: 1.85;
+    }
+
+    .details {
+      padding: 42px 20px 82px;
+      text-align: center;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .detail-card {
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.12);
+      text-align: left;
+      box-shadow: 0 18px 55px rgba(0,0,0,.28);
+    }
+
+    .detail-card span {
+      color: #ffb8a0;
+      font-weight: 900;
+      letter-spacing: .18em;
+      font-size: .78rem;
+    }
+
+    .detail-card h3 {
+      margin: 12px 0 0;
+      font-size: 1.6rem;
+      letter-spacing: -.04em;
+    }
+
+    .detail-card p {
+      color: #d7bcb4;
+      line-height: 1.75;
+    }
+
+    .obsession {
+      padding: 78px 25px;
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(255, 101, 115, .12), transparent 60%);
+    }
+
+    .obsession p {
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: clamp(1.55rem, 7vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -.05em;
+      font-weight: 850;
+      color: #ffe0d6;
+    }
+
+    .timeline {
+      padding: 80px 22px 86px;
+      text-align: center;
+    }
+
+    .timeline h2 {
+      max-width: 680px;
+      margin: 10px auto 34px;
+      font-size: clamp(2.1rem, 9vw, 4.3rem);
+      line-height: .95;
+      letter-spacing: -.07em;
+    }
+
+    .timeline-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.065);
+      border: 1px solid rgba(255,255,255,.11);
+      text-align: left;
+    }
+
+    .timeline-item strong {
+      display: block;
+      color: #ffb8a0;
+      margin-bottom: 8px;
+      font-size: .9rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: #dec6bf;
+      line-height: 1.75;
     }
 
     .gallery {
@@ -245,6 +417,18 @@
       max-width: 520px;
       color: #cfaea6;
       line-height: 1.8;
+    }
+
+    .mini-note {
+      max-width: 680px;
+      margin: 70px auto 0;
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #f4dcd5;
+      line-height: 1.8;
+      text-align: left;
     }
 
     .letter {
@@ -308,6 +492,22 @@
       }
     }
 
+    @keyframes rise {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: .65;
+      }
+
+      100% {
+        transform: translateY(-115vh) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
     @media (min-width: 760px) {
       .gallery {
         grid-template-columns: repeat(3, 1fr);
@@ -317,12 +517,24 @@
       .photo-card {
         height: 540px;
       }
+
+      .detail-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="noise"></div>
+
+  <div class="hearts">
+    <span class="heart">♡</span>
+    <span class="heart">♡</span>
+    <span class="heart">♡</span>
+    <span class="heart">♡</span>
+    <span class="heart">♡</span>
+  </div>
 
   <main class="page">
     <section class="hero">
@@ -342,13 +554,18 @@
       </div>
 
       <a class="button" href="#galeria">ver esse caos bonito</a>
-      <button class="music-button" onclick="tocarMusica()">
-  tocar trilha sonora ♫
+
+      <button id="musicButton" class="music-button" onclick="tocarMusica()">
+        tocar trilha sonora ♫
       </button>
 
-        <audio id="musica" loop>
+      <p class="music-hint">
+        coloca o som baixinho. essa parte combina mais com calma.
+      </p>
+
+      <audio id="musica" loop>
         <source src="japanese-denim.mp3" type="audio/mpeg">
-        </audio>
+      </audio>
     </section>
 
     <section class="section">
@@ -360,6 +577,98 @@
         Meio mistério, meio intensidade. Um olhar que parece guardar um mundo
         inteiro e um sorriso que muda qualquer foto.
       </p>
+    </section>
+
+    <section class="confession">
+      <p class="tag">sendo bem sincero</p>
+
+      <h2>
+        Eu não sei exatamente quando começou, mas eu já tô pensando demais em você.
+      </h2>
+
+      <p>
+        É estranho admitir isso assim, mas tem algo em você que fica. No jeito,
+        nas fotos, no olhar, nas pequenas coisas que eu ainda tô conhecendo.
+      </p>
+
+      <p>
+        Não é pressa. Não é promessa exagerada. É só aquela sensação boa de querer
+        saber mais, puxar mais assunto, descobrir mais detalhes e ficar sorrindo
+        sem perceber.
+      </p>
+    </section>
+
+    <section class="details">
+      <p class="tag">coisas que eu reparei</p>
+
+      <div class="detail-grid">
+        <div class="detail-card">
+          <span>01</span>
+          <h3>Seu olhar</h3>
+          <p>
+            Tem um mistério nele. Daqueles que fazem a pessoa querer ficar mais um
+            pouco só tentando entender.
+          </p>
+        </div>
+
+        <div class="detail-card">
+          <span>02</span>
+          <h3>Seu cabelo</h3>
+          <p>
+            Vermelho, intenso, impossível de ignorar. Combina muito com essa energia
+            meio caos bonito que você tem.
+          </p>
+        </div>
+
+        <div class="detail-card">
+          <span>03</span>
+          <h3>Seu jeito</h3>
+          <p>
+            Você tem uma presença diferente. Mesmo de longe, mesmo por mensagem,
+            parece que muda o clima.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="obsession">
+      <p>
+        Talvez “vidrado” seja a palavra certa. Não de um jeito pesado, mas daquele
+        jeito bobo de ficar esperando uma mensagem, reparando nos detalhes e achando
+        graça até do que nem era pra ter tanta graça assim.
+      </p>
+    </section>
+
+    <section class="timeline">
+      <p class="tag">o problema é que</p>
+
+      <h2>Você foi virando pensamento sem pedir licença.</h2>
+
+      <div class="timeline-list">
+        <div class="timeline-item">
+          <strong>primeiro</strong>
+          <p>
+            Eu só achei você bonita. Daquelas belezas que fazem a pessoa olhar
+            uma vez e depois voltar pra olhar de novo.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <strong>depois</strong>
+          <p>
+            Comecei a reparar no jeito. Na energia. Nesse ar meio intenso,
+            meio misterioso, meio “não sei explicar, mas gostei”.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <strong>agora</strong>
+          <p>
+            Eu tô aqui fazendo um site pra você, então acho que a situação já
+            saiu um pouco do controle. Mas eu confesso: gostei disso.
+          </p>
+        </div>
+      </div>
     </section>
 
     <section id="galeria" class="gallery">
@@ -397,6 +706,15 @@
         E talvez esse site seja só uma forma diferente de dizer:
         eu reparei em você.
       </p>
+
+      <div class="mini-note">
+        <p>
+          O pior é que nem é só sobre aparência. É sobre a curiosidade que você
+          dá. Sobre querer entender suas manias, seus gostos, suas músicas, seus
+          dias bons, seus dias estranhos e esse monte de detalhe que vai fazendo
+          alguém ficar cada vez mais interessante.
+        </p>
+      </div>
     </section>
 
     <section class="letter">
@@ -408,18 +726,32 @@
 
       <div id="carta" class="letter-box">
         <p>
-          Júlia, eu ainda estou descobrindo seu universo, mas já deu pra perceber
-          que tem algo em você que prende a atenção de um jeito diferente.
+          Júlia, eu ainda tô te conhecendo, mas já deu pra perceber que você tem
+          alguma coisa diferente. Alguma coisa que prende, que dá vontade de voltar,
+          que faz a conversa parecer pequena perto da curiosidade que você causa.
         </p>
 
         <p>
-          Talvez seja o cabelo vermelho, talvez seja o olhar, talvez seja esse ar
-          de quem vive em outro ritmo. Ou talvez seja só você mesmo.
+          Eu gosto desse mistério em você. Gosto do seu jeito, das suas fotos, da sua
+          energia meio intensa, meio doce, meio impossível de explicar sem parecer
+          emocionado demais.
         </p>
 
         <p>
-          Fiz esse cantinho porque achei que você merecia algo que fosse só seu.
-          Simples, mas pensado em cada detalhe.
+          E talvez eu esteja mesmo um pouco emocionado. Talvez eu esteja vidrado.
+          Talvez eu esteja reparando em detalhe demais. Mas, sinceramente, eu não tô
+          achando ruim.
+        </p>
+
+        <p>
+          Tem algo muito bonito nessa fase de conhecer alguém. Não saber tudo ainda,
+          mas querer saber. Não ter certeza de nada, mas sentir vontade de continuar.
+          Não prometer o mundo, mas prestar atenção como se cada detalhe importasse.
+        </p>
+
+        <p>
+          Esse site é só um jeito diferente de dizer que você ficou na minha cabeça.
+          E que, se depender de mim, eu ainda quero descobrir muito mais sobre você.
         </p>
       </div>
     </section>
@@ -433,6 +765,21 @@
     function abrirCarta() {
       const carta = document.getElementById("carta");
       carta.classList.add("open");
+    }
+
+    function tocarMusica() {
+      const musica = document.getElementById("musica");
+      const botao = document.getElementById("musicButton");
+
+      musica.volume = 0.55;
+
+      if (musica.paused) {
+        musica.play();
+        botao.textContent = "pausar trilha sonora ♫";
+      } else {
+        musica.pause();
+        botao.textContent = "tocar trilha sonora ♫";
+      }
     }
   </script>
 </body>
