@@ -1,13 +1,414 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#12070b" />
-    <title>Júlia ✦</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Júlia</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #070506;
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body::selection {
+      background: #ff6b7a;
+      color: #18070b;
+    }
+
+    .page {
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(155, 24, 49, 0.45), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(255, 116, 46, 0.24), transparent 34%),
+        linear-gradient(180deg, #070506 0%, #13080c 50%, #070506 100%);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      padding: 48px 22px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      isolation: isolate;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      z-index: 50;
+      background-image:
+        linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle, black, transparent 78%);
+    }
+
+    .orb {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      filter: blur(70px);
+      z-index: -1;
+      opacity: .75;
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .orb.one {
+      top: 80px;
+      left: -90px;
+      background: #a31934;
+    }
+
+    .orb.two {
+      bottom: 90px;
+      right: -90px;
+      background: #ff7a30;
+      animation-delay: 1.4s;
+    }
+
+    .tag {
+      margin: 0 0 12px;
+      color: #ffb8a0;
+      font-size: .74rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(4.8rem, 29vw, 10rem);
+      line-height: .8;
+      letter-spacing: -.09em;
+      font-weight: 950;
+      text-shadow: 0 0 45px rgba(255, 75, 95, .38);
+    }
+
+    .subtitle {
+      max-width: 430px;
+      margin: 22px auto 30px;
+      color: #eed8d1;
+      font-size: 1.08rem;
+      line-height: 1.65;
+    }
+
+    .hero-photo {
+      width: min(82vw, 340px);
+      aspect-ratio: 3 / 4;
+      margin: 0 auto;
+      padding: 10px;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.065);
+      box-shadow: 0 26px 90px rgba(0,0,0,.62);
+      transform: rotate(-2deg);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .hero-photo img {
+      border-radius: 25px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      margin: 30px auto 0;
+      padding: 15px 23px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffd0a2, #ff6573, #8f1d37);
+      color: #1a070b;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 16px 36px rgba(255, 72, 92, .24);
+      cursor: pointer;
+    }
+
+    .section {
+      padding: 82px 23px;
+      text-align: center;
+    }
+
+    .section h2 {
+      max-width: 680px;
+      margin: 10px auto 0;
+      font-size: clamp(2.2rem, 10vw, 4.6rem);
+      line-height: .95;
+      letter-spacing: -.07em;
+    }
+
+    .section p {
+      max-width: 560px;
+      margin: 22px auto 0;
+      color: #dcc6bf;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .star {
+      color: #ffb8a0;
+      font-size: 2.2rem;
+    }
+
+    .gallery {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .photo-card {
+      height: 470px;
+      border-radius: 32px;
+      overflow: hidden;
+      background: #160d10;
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: 0 22px 70px rgba(0,0,0,.48);
+      position: relative;
+    }
+
+    .photo-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.35));
+      pointer-events: none;
+    }
+
+    .photo-card:nth-child(odd) {
+      transform: rotate(-1deg);
+    }
+
+    .photo-card:nth-child(even) {
+      transform: rotate(1deg);
+    }
+
+    .quote {
+      padding: 95px 25px;
+      text-align: center;
+    }
+
+    .quote blockquote {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: clamp(2rem, 8.8vw, 4.3rem);
+      line-height: 1;
+      letter-spacing: -.06em;
+      font-weight: 850;
+    }
+
+    .quote p {
+      margin: 24px auto 0;
+      max-width: 520px;
+      color: #cfaea6;
+      line-height: 1.8;
+    }
+
+    .letter {
+      padding: 90px 23px 70px;
+      text-align: center;
+    }
+
+    .letter h2 {
+      max-width: 620px;
+      margin: 10px auto;
+      font-size: clamp(2.2rem, 10vw, 4.6rem);
+      line-height: .95;
+      letter-spacing: -.07em;
+    }
+
+    .letter-box {
+      display: none;
+      max-width: 590px;
+      margin: 30px auto 0;
+      padding: 26px;
+      border-radius: 30px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.13);
+      color: #f3ded8;
+      line-height: 1.85;
+      text-align: left;
+      box-shadow: 0 20px 70px rgba(0,0,0,.38);
+      animation: appear .65s ease both;
+    }
+
+    .letter-box.open {
+      display: block;
+    }
+
+    footer {
+      padding: 34px 24px 62px;
+      text-align: center;
+      color: #9d817a;
+      font-size: .9rem;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-22px);
+      }
+    }
+
+    @media (min-width: 760px) {
+      .gallery {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 34px;
+      }
+
+      .photo-card {
+        height: 540px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <main class="page">
+    <section class="hero">
+      <div class="orb one"></div>
+      <div class="orb two"></div>
+
+      <p class="tag">um pequeno universo feito pra ela</p>
+
+      <h1>Júlia</h1>
+
+      <p class="subtitle">
+        Algumas pessoas chegam devagar e, mesmo assim, mudam o clima inteiro.
+      </p>
+
+      <div class="hero-photo">
+        <img src="julia-5.jpg" alt="Foto da Júlia">
+      </div>
+
+      <a class="button" href="#galeria">ver esse caos bonito</a>
+    </section>
+
+    <section class="section">
+      <div class="star">✦</div>
+
+      <h2>Ela tem esse jeito impossível de ignorar.</h2>
+
+      <p>
+        Meio mistério, meio intensidade. Um olhar que parece guardar um mundo
+        inteiro e um sorriso que muda qualquer foto.
+      </p>
+    </section>
+
+    <section id="galeria" class="gallery">
+      <article class="photo-card">
+        <img src="julia-1.jpg" alt="Foto da Júlia 1">
+      </article>
+
+      <article class="photo-card">
+        <img src="julia-2.jpg" alt="Foto da Júlia 2">
+      </article>
+
+      <article class="photo-card">
+        <img src="julia-3.jpg" alt="Foto da Júlia 3">
+      </article>
+
+      <article class="photo-card">
+        <img src="julia-4.jpg" alt="Foto da Júlia 4">
+      </article>
+
+      <article class="photo-card">
+        <img src="julia-5.jpg" alt="Foto da Júlia 5">
+      </article>
+
+      <article class="photo-card">
+        <img src="julia-6.jpg" alt="Foto da Júlia 6">
+      </article>
+    </section>
+
+    <section class="quote">
+      <blockquote>
+        Tem gente que não precisa fazer esforço nenhum pra virar assunto na cabeça da gente.
+      </blockquote>
+
+      <p>
+        E talvez esse site seja só uma forma diferente de dizer:
+        eu reparei em você.
+      </p>
+    </section>
+
+    <section class="letter">
+      <p class="tag">uma coisa só entre nós</p>
+
+      <h2>Tenho uma carta pra você.</h2>
+
+      <button class="button" onclick="abrirCarta()">abrir carta</button>
+
+      <div id="carta" class="letter-box">
+        <p>
+          Júlia, eu ainda estou descobrindo seu universo, mas já deu pra perceber
+          que tem algo em você que prende a atenção de um jeito diferente.
+        </p>
+
+        <p>
+          Talvez seja o cabelo vermelho, talvez seja o olhar, talvez seja esse ar
+          de quem vive em outro ritmo. Ou talvez seja só você mesmo.
+        </p>
+
+        <p>
+          Fiz esse cantinho porque achei que você merecia algo que fosse só seu.
+          Simples, mas pensado em cada detalhe.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      feito com um pouco de código, coragem e curiosidade por você.
+    </footer>
+  </main>
+
+  <script>
+    function abrirCarta() {
+      const carta = document.getElementById("carta");
+      carta.classList.add("open");
+    }
+  </script>
+</body>
 </html>
