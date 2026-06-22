@@ -813,9 +813,17 @@
 
     function tocarMusica() {
       if (musica.paused) {
-        musica.play();
-        botao.textContent = "pausar trilha sonora ♫";
-        atualizarNomeDaMusica();
+        musica.src = playlist[musicaAtual].arquivo;
+        musica.volume = 0.55;
+
+        musica.play()
+          .then(function() {
+            botao.textContent = "pausar trilha sonora ♫";
+            atualizarNomeDaMusica();
+          })
+          .catch(function() {
+            nomeMusica.textContent = "não consegui tocar a música. confere se o arquivo está na mesma pasta do site.";
+          });
       } else {
         musica.pause();
         botao.textContent = "tocar trilha sonora ♫";
@@ -830,5 +838,22 @@
       }
 
       musica.src = playlist[musicaAtual].arquivo;
-      musica.play();
-    
+      musica.volume = 0.55;
+
+      musica.play()
+        .then(function() {
+          botao.textContent = "pausar trilha sonora ♫";
+          atualizarNomeDaMusica();
+        })
+        .catch(function() {
+          nomeMusica.textContent = "não consegui tocar: " + playlist[musicaAtual].nome;
+        });
+    }
+
+    musica.addEventListener("ended", proximaMusica);
+
+    function abrirCarta() {
+      const carta = document.getElementById("carta");
+      carta.classList.add("open");
+    }
+  </script>
