@@ -798,7 +798,7 @@
       }
     ];
 
-    let musicaAtual = 0;
+    let musicaAtual = sortearMusica();
 
     const musica = document.getElementById("musica");
     const botao = document.getElementById("musicButton");
@@ -806,6 +806,20 @@
 
     musica.volume = 0.55;
     musica.src = playlist[musicaAtual].arquivo;
+
+    function sortearMusica() {
+      return Math.floor(Math.random() * playlist.length);
+    }
+
+    function sortearProximaMusica() {
+      let novaMusica = sortearMusica();
+
+      while (novaMusica === musicaAtual && playlist.length > 1) {
+        novaMusica = sortearMusica();
+      }
+
+      return novaMusica;
+    }
 
     function atualizarNomeDaMusica() {
       nomeMusica.textContent = "tocando agora: " + playlist[musicaAtual].nome;
@@ -831,11 +845,7 @@
     }
 
     function proximaMusica() {
-      musicaAtual++;
-
-      if (musicaAtual >= playlist.length) {
-        musicaAtual = 0;
-      }
+      musicaAtual = sortearProximaMusica();
 
       musica.src = playlist[musicaAtual].arquivo;
       musica.volume = 0.55;
