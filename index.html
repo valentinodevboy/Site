@@ -559,13 +559,11 @@
         tocar trilha sonora ♫
       </button>
 
-      <p class="music-hint">
+      <p id="musicName" class="music-hint">
         coloca o som baixinho. essa parte combina mais com calma.
       </p>
 
-      <audio id="musica" loop>
-        <source src="japanese-denim.mp3" type="audio/mpeg">
-      </audio>
+      <audio id="musica"></audio>
     </section>
 
     <section class="section">
@@ -777,25 +775,60 @@
   </main>
 
   <script>
-    function abrirCarta() {
-      const carta = document.getElementById("carta");
-      carta.classList.add("open");
+    const playlist = [
+      {
+        nome: "Japanese Denim",
+        arquivo: "japanese-denim.mp3"
+      },
+      {
+        nome: "You Broke My Heart - Current Joys",
+        arquivo: "You Broke My Heart.mp3"
+      },
+      {
+        nome: "Symphonia IX",
+        arquivo: "Symphonia IX.mp3"
+      },
+      {
+        nome: "Zenith - Lure Division",
+        arquivo: "Zenith.mp3"
+      },
+      {
+        nome: "Best Friend - Blue Moon Days",
+        arquivo: "Best Friend.mp3"
+      }
+    ];
+
+    let musicaAtual = 0;
+
+    const musica = document.getElementById("musica");
+    const botao = document.getElementById("musicButton");
+    const nomeMusica = document.getElementById("musicName");
+
+    musica.volume = 0.55;
+    musica.src = playlist[musicaAtual].arquivo;
+
+    function atualizarNomeDaMusica() {
+      nomeMusica.textContent = "tocando agora: " + playlist[musicaAtual].nome;
     }
 
     function tocarMusica() {
-      const musica = document.getElementById("musica");
-      const botao = document.getElementById("musicButton");
-
-      musica.volume = 0.55;
-
       if (musica.paused) {
         musica.play();
         botao.textContent = "pausar trilha sonora ♫";
+        atualizarNomeDaMusica();
       } else {
         musica.pause();
         botao.textContent = "tocar trilha sonora ♫";
       }
     }
-  </script>
-</body>
-</html>
+
+    function proximaMusica() {
+      musicaAtual++;
+
+      if (musicaAtual >= playlist.length) {
+        musicaAtual = 0;
+      }
+
+      musica.src = playlist[musicaAtual].arquivo;
+      musica.play();
+    
